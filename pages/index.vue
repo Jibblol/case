@@ -38,7 +38,8 @@ export default class extends Vue {
     if (this.url.includes('youtube')) {
       console.log('TRUE FOR FAEN')
     } else {
-      console.log('FALSEEEEEEEEEEEE')
+      alert('Please enter a valid URL')
+      this.url = ''
     }
     // console.log(testUrl.host)
   }
