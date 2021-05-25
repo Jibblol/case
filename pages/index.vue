@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <form>
-      <label for="name">Your name</label>
+      <label for="name">URL: </label>
       <input v-model="url" type="url" />
-      <p>Your name is: {{ this.url }}</p>
+      <!-- <p>Your name is: {{ this.url }}</p> -->
       <!-- <input type="submit" v-on:submit.prevent="parseUrl(url)" /> -->
-      <b-button @click="parseUrl(url)">Submit</b-button>
+      <b-button @click="parseUrl()">Submit</b-button>
     </form>
     <div v-if="markup">
       {{ url }}
@@ -24,19 +24,22 @@ import Smartembed from '~/components/Smartembed.vue'
 })
 export default class extends Vue {
   url: string = ''
-  markup: boolean = false
+  showUrl: boolean = false
 
   youtubeUrl: string = 'https://www.youtube.com/watch?v=9UVdAbFO56k&t=11s'
   // twitterUrl: string = 'https://twitter.com/politietost?tweetlimit=3'
 
   parseUrl(url: string) {
-    // var parser = document.createElement('a')
-    // parser.href = this.url
+    var markup: any 
 
-    // console.log(parser.host)
-    // var testUrl = new URL(this.url)
     if (this.url.includes('youtube')) {
-      console.log('TRUE FOR FAEN')
+      var youtubeUrl = new URL(this.url)
+      var video_id = youtubeUrl.search.split('v=')[1]
+      var ampersandPosition = video_id.indexOf('&')
+      if (ampersandPosition != -1) {
+        video_id = video_id.substring(0, ampersandPosition)
+      }
+      console.log(video_id)
     } else {
       alert('Please enter a valid URL')
       this.url = ''
