@@ -7,9 +7,6 @@
       <!-- <input type="submit" v-on:submit.prevent="parseUrl(url)" /> -->
       <b-button @click="parseUrl()">Submit</b-button>
     </form>
-    <div>
-      {{ url }}
-    </div>
   </div>
 </template>
 
@@ -25,7 +22,6 @@ import Smartembed from '~/components/Smartembed.vue';
 export default class extends Vue {
   url: string = '';
   showUrl: boolean = false;
-  // var markup: any
 
   // youtubeUrl: string = 'https://www.youtube.com/watch?v=9UVdAbFO56k&t=11s';
   // twitterUrl: string = 'https://twitter.com/politietost?tweetlimit=3'
