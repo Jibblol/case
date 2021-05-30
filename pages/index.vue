@@ -27,56 +27,60 @@ export default class extends Vue {
   showUrl: boolean = false;
   // var markup: any
 
-  youtubeUrl: string = 'https://www.youtube.com/watch?v=9UVdAbFO56k&t=11s';
+  // youtubeUrl: string = 'https://www.youtube.com/watch?v=9UVdAbFO56k&t=11s';
   // twitterUrl: string = 'https://twitter.com/politietost?tweetlimit=3'
 
   parseUrl(url: string) {
-    if (this.url.includes('youtube')) {
-      var youtubeUrl = new URL(this.url);
-      var video_id = youtubeUrl.search.split('v=')[1];
-      var ampersandPosition = video_id.indexOf('&');
-      if (ampersandPosition != -1) {
-        video_id = video_id.substring(0, ampersandPosition);
+    try {
+      const urlToCheck = new URL(this.url);
+      const hostname = urlToCheck.hostname;
+      console.log(hostname);
+      if (hostname === 'www.youtube.com') {
+        this.youtubeEmbed();
       }
+      if (hostname === 'twitter.com') {
+        this.twitterEmbed();
+      }
+    } catch (error) {
+      console.log('invalid URL');
+    }
+  }
 
-      var youtubeElement = document.createElement('amedia-smartembed-iframe');
-      youtubeElement.className = 'am-smartembed am-embed-ratio';
-      youtubeElement.style.paddingTop = '56.25%';
-      youtubeElement.setAttribute(
-        'data-iframeurl',
-        `https://www.youtube.com/embed/${video_id}?start=0`
-      );
-      console.log(youtubeElement);
+  twitterEmbed() {
+    var twitterUrl = new URL(this.url);
+    var twitter_id = twitterUrl.pathname.split('/')[1]; // politietost
+    var tweetLimit = twitterUrl.search.split('=')[1]; // 3 (or other number)
+
+    var twitterElement = document.createElement('a');
+    twitterElement.className = 'twitter-timeline';
+    twitterElement.setAttribute('data-tweet-limit', `${tweetLimit}`);
+    twitterElement.setAttribute('data-height', '400');
+    twitterElement.setAttribute('data-chrome', 'nofooter noborders');
+    twitterElement.textContent = `Tweets from ${twitter_id}`;
+
+    var twitterScriptTag = document.createElement('script');
+    twitterScriptTag.async = true;
+    twitterScriptTag.src = '//platform.twitter.com/widgets.js';
+    twitterScriptTag.charset = 'utf-8';
+    console.log(twitterElement, twitterScriptTag);
+  }
+
+  youtubeEmbed() {
+    var youtubeUrl = new URL(this.url);
+    var video_id = youtubeUrl.search.split('v=')[1];
+    var ampersandPosition = video_id.indexOf('&');
+    if (ampersandPosition != -1) {
+      video_id = video_id.substring(0, ampersandPosition);
     }
 
-    if (this.url.includes('twitter.com')) {
-      var twitterUrl = new URL(this.url);
-      var twitter_id = twitterUrl.pathname.split('/')[1]; // politietost
-      var tweetLimit = twitterUrl.search.split('=')[1]; // 3 (or other number)
-
-      // const attrs {
-      //   'data-tweet-limit': '3',
-      //   'data-height': '400',
-      //   'data-chrome': 'nofooter noborders'
-      // }
-
-      var twitterElement = document.createElement('a');
-      twitterElement.className = 'twitter-timeline';
-      twitterElement.setAttribute('data-tweet-limit', `${tweetLimit}`);
-      twitterElement.setAttribute('data-height', '400');
-      twitterElement.setAttribute('data-chrome', 'nofooter noborders');
-      twitterElement.textContent = `Tweets from ${twitter_id}`;
-
-      var twitterScriptTag = document.createElement('script')
-      twitterScriptTag.async = true;
-      twitterScriptTag.src = '//platform.twitter.com/widgets.js'
-      twitterScriptTag.charset = 'utf-8'
-      console.log(twitterElement, twitterScriptTag);
-    } else {
-      alert('Please enter a valid URL');
-      this.url = '';
-    }
-    // console.log(testUrl.host)
+    var youtubeElement = document.createElement('amedia-smartembed-iframe');
+    youtubeElement.className = 'am-smartembed am-embed-ratio';
+    youtubeElement.style.paddingTop = '56.25%';
+    youtubeElement.setAttribute(
+      'data-iframeurl',
+      `https://www.youtube.com/embed/${video_id}?start=0`
+    );
+    console.log(youtubeElement);
   }
 }
 </script>
