@@ -7,6 +7,7 @@
       <!-- <input type="submit" v-on:submit.prevent="parseUrl(url)" /> -->
       <b-button @click="parseUrl()">Submit</b-button>
     </form>
+    <div id="thing"></div>
   </div>
 </template>
 
@@ -37,6 +38,9 @@ export default class extends Vue {
       if (hostname === 'twitter.com') {
         this.twitterEmbed();
       }
+      if (hostname === 'imgur.com') {
+        this.imgurEmbed();
+      }
     } catch (error) {
       console.log('invalid URL');
     }
@@ -49,6 +53,7 @@ export default class extends Vue {
 
     var twitterElement = document.createElement('a');
     twitterElement.className = 'twitter-timeline';
+    twitterElement.href = `${twitterUrl}`;
     twitterElement.setAttribute('data-tweet-limit', `${tweetLimit}`);
     twitterElement.setAttribute('data-height', '400');
     twitterElement.setAttribute('data-chrome', 'nofooter noborders');
@@ -56,9 +61,13 @@ export default class extends Vue {
 
     var twitterScriptTag = document.createElement('script');
     twitterScriptTag.async = true;
-    twitterScriptTag.src = '//platform.twitter.com/widgets.js';
+    twitterScriptTag.src = 'https://platform.twitter.com/widgets.js';
     twitterScriptTag.charset = 'utf-8';
     console.log(twitterElement, twitterScriptTag);
+    document
+      .getElementById('thing')
+      ?.appendChild(twitterElement)
+      .appendChild(twitterScriptTag);
   }
 
   youtubeEmbed() {
@@ -77,6 +86,36 @@ export default class extends Vue {
       `https://www.youtube.com/embed/${video_id}?start=0`
     );
     console.log(youtubeElement);
+    document.getElementById('thing')?.appendChild(youtubeElement);
+  }
+
+  imgurEmbed() {
+    var imgurUrl = new URL(this.url);
+    var imgur_id = imgurUrl.pathname.split('/')[2];
+
+    var imgurElementBlockquote = document.createElement('blockquote');
+    imgurElementBlockquote.className = 'imgur-embed-pub';
+    imgurElementBlockquote.lang = 'en';
+    imgurElementBlockquote.setAttribute('data-id', `a/${imgur_id}`);
+    imgurElementBlockquote.setAttribute('data-context', 'false');
+
+    var imgurElementLink = document.createElement('a');
+    imgurElementLink.href = `https://imgur.com/a/${imgur_id}`;
+    imgurElementLink.textContent = 'Imgur';
+
+    imgurElementBlockquote.appendChild(imgurElementLink);
+
+    var imgurElementScript = document.createElement('script');
+    imgurElementScript.async = true;
+    imgurElementScript.src = `https://s.imgur.com/min/embed.js`;
+    imgurElementScript.charset = 'utf-8';
+
+    document
+      .getElementById('thing')
+      ?.appendChild(imgurElementBlockquote)
+      .appendChild(imgurElementScript);
+
+    console.log(imgurElementBlockquote, imgurElementScript);
   }
 }
 </script>

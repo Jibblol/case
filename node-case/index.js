@@ -9,7 +9,6 @@ const imgurUrl = 'https://imgur.com/gallery/oIpAQ';
      try {
         const urlToCheck = new URL(url);
         const hostname = urlToCheck.hostname;
-        console.log(hostname);
         if (hostname === 'www.youtube.com') {
             return youtubeEmbed(urlToCheck);
         }
@@ -57,6 +56,19 @@ const imgurUrl = 'https://imgur.com/gallery/oIpAQ';
     }
  }
 
+ function imgurEmbed(imgurUrl) {
+    // var imgur_id = imgurUrl.pathname
+    var imgur_id = imgurUrl.pathname.split('/')[2];
+
+    return `<blockquote class="imgur-embed-pub" lang="en" data-id="a/${imgur_id}" data-context="false">
+        <a href="https://imgur.com/a/${imgur_id}">Imgur</a>
+    </blockquote>
+    <script async src="https://s.imgur.com/min/embed.js" charset="utf-8"></script> ` 
+
+ }
+
 console.log(parseUrl(youtubeUrl))
+console.log('')
 console.log(parseUrl(twitterUrl))
+console.log('')
 console.log(parseUrl(imgurUrl))
