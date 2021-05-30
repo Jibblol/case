@@ -52,7 +52,7 @@ export default class extends Vue {
     if (this.url.includes('twitter.com')) {
       var twitterUrl = new URL(this.url);
       var twitter_id = twitterUrl.pathname.split('/')[1]; // politietost
-      var tweetLimit = twitterUrl.search.split('=')[1];
+      var tweetLimit = twitterUrl.search.split('=')[1]; // 3 (or other number)
 
       // const attrs {
       //   'data-tweet-limit': '3',
@@ -66,7 +66,12 @@ export default class extends Vue {
       twitterElement.setAttribute('data-height', '400');
       twitterElement.setAttribute('data-chrome', 'nofooter noborders');
       twitterElement.textContent = `Tweets from ${twitter_id}`;
-      console.log(twitterElement);
+
+      var twitterScriptTag = document.createElement('script')
+      twitterScriptTag.async = true;
+      twitterScriptTag.src = '//platform.twitter.com/widgets.js'
+      twitterScriptTag.charset = 'utf-8'
+      console.log(twitterElement, twitterScriptTag);
     } else {
       alert('Please enter a valid URL');
       this.url = '';
