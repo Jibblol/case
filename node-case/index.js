@@ -1,9 +1,15 @@
 
-const youtubeUrl = 'https://www.youtube.com/watch?v=9UVdAbFO56k&t=11s';
+// const youtubeUrl = 'https://www.youtube.com/watch?v=9UVdAbFO56k&t=11s';
+// const youtubeUrl = 'https://www.youtube.com/watch?v=BHACKCNDMW8&t=78s';
+const youtubeUrl = 'https://www.youtube.com/watch?v=74F6lAOLtyA&t=23s';
 
-const twitterUrl = 'https://twitter.com/politietost?tweetlimit=3';
+// const twitterUrl = 'https://twitter.com/politietost?tweetlimit=3';
+// const twitterUrl = 'https://twitter.com/erna_solberg?tweetlimit=5';
+const twitterUrl = 'https://twitter.com/jonasgahrstore?tweetlimit=7';
 
-const imgurUrl = 'https://imgur.com/gallery/oIpAQ';
+const imgurUrl = 'https://imgur.com/gallery/v38ZpVa';
+// const imgurUrl = 'https://imgur.com/gallery/6j0xm1T';
+// const imgurUrl = 'https://imgur.com/gallery/93BYaK4';
  
  function parseUrl(url) {
      try {
